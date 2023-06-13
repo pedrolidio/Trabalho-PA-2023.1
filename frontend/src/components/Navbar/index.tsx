@@ -1,12 +1,15 @@
+'use client'
+import { useContext } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
+import { AuthContext } from '@/contexts/AuthContext';
 import './styles.css';
 
 import logoImg from '@/assets/logo.jpg';
 
 export default function Navbar() {
-  let loggedIn = true;
+  const { isAuthenticaded, signOut } = useContext(AuthContext);
 
   return (
     <nav className="navbar">
@@ -24,13 +27,13 @@ export default function Navbar() {
             <Link href="/order-cake" className="link">Encomendar Bolo</Link>
           </li>
 
-          {loggedIn ? (
+          {isAuthenticaded ? (
             <>
               <li>
                 <Link href="/account" className="link">Minha Conta</Link>
               </li>
               <li>
-                <Link href="/logout" className="link">Sair</Link>
+                <Link href="#" className="link" onClick={signOut}>Sair</Link>
               </li>
             </>
           ) : (

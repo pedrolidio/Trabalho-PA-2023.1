@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import './globals.css';
+import { AuthProvider } from '@/contexts/AuthContext';
 
 export const metadata = {
   title: 'Eliane Perrut ♡ Sweet Cake',
@@ -13,7 +14,11 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
     </html>
   )
 }
