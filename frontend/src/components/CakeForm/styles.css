@@ -1,0 +1,30 @@
+.cake-form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin-left: 50px;
+}
+
+.cake-form div {
+    display: flex;
+    width: 100%;
+}
+
+.cake-form div div {
+    display: flex;
+    flex-direction: column;
+}
+
+.blank-divisor {
+    width: 10px !important;
+}
+
+.cake-form .link {
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.cake-form .link svg {
+    margin-right: 8px;
+}

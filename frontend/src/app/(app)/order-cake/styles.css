@@ -1,0 +1,22 @@
+.order-cake-container {
+    display: flex;
+    width: 100%;
+    max-width: 840px;
+    align-items: center;
+    justify-content: center;
+}
+
+.left-container {
+    width: 330px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cake-sample {
+    height: auto;
+    width: 330px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
