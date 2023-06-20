@@ -5,13 +5,14 @@
     margin-left: 50px;
 }
 
-.cake-form div {
+.cake-form-row {
     display: flex;
     width: 100%;
 }
 
-.cake-form div div {
+.cake-form-row .cake-form-column {
     display: flex;
+    width: 100%;
     flex-direction: column;
 }
 

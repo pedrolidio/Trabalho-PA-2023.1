@@ -8,7 +8,7 @@ import { AuthContext } from '@/contexts/AuthContext';
 
 import './styles.css';
 
-import cake1 from '../../../assets/cake1.jpg';
+import cake1 from '@/assets/cake1.jpg';
 
 export const metadata = {
   title: 'Encomendar Bolo - Eliane Perrut ♡ Sweet Cake',
@@ -28,7 +28,7 @@ export default function OrderCake() {
       <div className="left-container">
         <h1>Monte o seu bolo!</h1>
         <Image src={cake1} alt="Bolo de exemplo" className="cake-sample"/>
-        <p>Bolo de exemplo, com aro 15 cm.</p>
+        <p>* Entraremos em contato para conversar os detalhes da decoração e entrega.</p>
       </div>
       <CakeForm />
     </div>

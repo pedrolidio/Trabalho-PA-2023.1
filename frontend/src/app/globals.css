@@ -17,6 +17,10 @@ input, button, textarea, select {
   font: 400 18px Roboto, sans-serif;
 }
 
+h1 {
+  font-weight: 400;
+}
+
 button {
   cursor: pointer;
 }
@@ -78,4 +82,9 @@ form label {
 
 .link:hover {
   opacity: 0.8;
+}
+
+.error-label {
+  font-size: 11px;
+  color: red;
 }
