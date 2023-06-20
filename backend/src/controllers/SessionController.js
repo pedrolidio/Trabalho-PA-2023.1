@@ -7,13 +7,17 @@ const connection = require('../database/connection');
 module.exports = {
     async verify(request, response) {
         const user = await connection('users').select('*').where('id', request.userId).first();
+        const role = user.email == "admin@epcakes.com" ? ("admin") : (
+            user.email == "manager@epcakes.com" ? ("manager") : undefined
+        );
 
         return response.json({
             user: {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                whatsapp: user.whatsapp
+                whatsapp: user.whatsapp,
+                role
             }
         });
     },
@@ -29,17 +33,25 @@ module.exports = {
 
         bcrypt.compare(password, user.password).then(function(result) {
             if(result == true) {
-                const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, { expiresIn: 60 * 60 * 24 /* 1 dia */ });
+                const role = user.email == "admin@epcakes.com" ? ("admin") : (
+                    user.email == "manager@epcakes.com" ? ("manager") : undefined
+                );
 
-                console.log(token);
-
+                const token = jwt.sign({ 
+                    id: user.id, 
+                    role
+                }, process.env.TOKEN_SECRET, { 
+                    expiresIn: 60 * 60 * 24 /* 1 dia */ 
+                });
+                
                 return response.json({
                     token,
                     user: {
                         id: user.id,
                         name: user.name,
                         email: user.email,
-                        whatsapp: user.whatsapp
+                        whatsapp: user.whatsapp,
+                        role
                     }
                 });
             } else {

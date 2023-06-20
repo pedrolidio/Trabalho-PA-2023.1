@@ -4,10 +4,13 @@ const jwt = require('jsonwebtoken');
 const connection = require('../database/connection');
 
 const verifyJWT = async (request, response, next) => {
-    const authHeader = request.headers['authorization'];
+    const authHeader = request.headers.authorization || request.headers.Authorization;
 
     if(!authHeader)
        return response.status(401).json({ error: "No token received"});
+
+    if(!authHeader.startsWith('Bearer '))
+       return response.status(401).json({ error: "Invalid token received"});
 
     const token = authHeader.split(' ')[1];
 
@@ -24,6 +27,7 @@ const verifyJWT = async (request, response, next) => {
         date.setDate(date.getDate() + 1);
 
         request.userId = decoded.id;
+        request.userRole = decoded.role;
         request.token = token;
         request.tokenExpiration = date.toLocaleDateString('pt-BR');
         
