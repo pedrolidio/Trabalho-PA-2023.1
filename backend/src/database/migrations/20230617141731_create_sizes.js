@@ -4,11 +4,12 @@
  */
 exports.up = function(knex) {
     return knex.schema
-        .createTable('batters',function(table){
+        .createTable('sizes',function(table){
             table.increments('id').primary;
             table.string('description').notNullable();
-            table.string('basePrice').notNullable();
+            table.integer('basePrice').notNullable().unsigned();
         });
+  
 };
 
 /**
@@ -17,5 +18,5 @@ exports.up = function(knex) {
  */
 exports.down = function(knex) {
     return knex.schema
-        .dropTable('batters');
+        .dropTable('sizes');  
 };

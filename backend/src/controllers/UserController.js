@@ -2,12 +2,6 @@ const bcrypt = require('bcrypt');
 
 const connection = require('../database/connection');
 
-const isEmailAvailable = async (email) => {
-    const user = await connection('users').select('email').where('email', email).first();
-
-    return user ? false : true;
-}
-
 module.exports = {
     async index(request, response) {
         const users = await connection('users').select('*');
@@ -44,14 +38,5 @@ module.exports = {
         }
     
         return response.sendStatus(200);
-    },
-
-    async checkEmailAvailability(request, response) {
-        const { email } = request.body;
-        const available = await isEmailAvailable(email);
-
-        return response.json({
-            available
-        });
     }
 };

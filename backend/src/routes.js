@@ -1,20 +1,19 @@
 const express = require('express');
 
 const verifyJWT = require('./middlewares/verifyJWT');
+const verifyRole = require('./middlewares/verifyRole');
 const verifyEmailAvailability = require('./middlewares/verifyEmailAvailability');
 
 const SessionController = require('./controllers/SessionController');
 const UserController = require('./controllers/UserController');
-const FormController = require('./controllers/FormController');
-const orderCake = require('./controllers/OrderCake');
-const sendTables = require('./controllers/SendTables');
-const addressCake = require('./controllers/AddressCake');
+const FormsController = require('./controllers/FormsController');
+const OrderController = require('./controllers/OrderController');
+const AddressController = require('./controllers/AddressController');
 
 const routes = express.Router();
 
-routes.get('/users', UserController.index);
 routes.post('/users', verifyEmailAvailability, UserController.create);
-routes.post('/verify/email', verifyEmailAvailability, FormController.verifyEmailAvailability);
+routes.post('/verify/email', verifyEmailAvailability, FormsController.verifyEmailAvailability);
 routes.post('/sessions', SessionController.create);
 
 // Rotas que necessitam de autenticação do usuário.
@@ -23,14 +22,19 @@ routes.use(verifyJWT);
 routes.get('/sessions', SessionController.verify);
 routes.delete('/sessions', SessionController.end);
 
-routes.get('/cakes/props',sendTables.send_values)
+routes.get('/order/form', FormsController.getOrderFormProps); 
+routes.post('/order', OrderController.create);
 
-routes.post('/order', orderCake.create_order);
-routes.get('/orders/pending', orderCake.list_all_orders); 
-routes.get('/orders/:id', orderCake.list_user);
-routes.post('/order/:id', orderCake.update_order);
+// Lembrete: verificar compatibilidade destas funções/adicionar recepção do id a partir do token
+routes.get('/orders/pending', verifyRole("admin", "manager"), OrderController.list_all_orders); 
+routes.get('/orders/:id', OrderController.list_user);
+routes.post('/order/:id', OrderController.update_order);
+routes.post('/address', AddressController.create); 
+routes.get('/addresses', AddressController.getAddressesByUser);
 
-routes.post('/address', addressCake.create_address); 
-routes.get('/address/:id', addressCake.list_address_user);
+// Rotas que necessitam de permissão de manager/admin.
+routes.use(verifyRole("admin"));
+routes.get('/users', UserController.index);
+
 
 module.exports = routes;

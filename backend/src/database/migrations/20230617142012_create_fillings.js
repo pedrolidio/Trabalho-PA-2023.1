@@ -7,7 +7,7 @@ exports.up = function(knex) {
         .createTable('fillings',function(table){
             table.increments('id').primary;
             table.string('description').notNullable();
-            table.string('basePrice').notNullable();
+            table.integer('basePrice').notNullable().unsigned();
         });
   
 };

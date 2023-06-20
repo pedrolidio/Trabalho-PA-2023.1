@@ -46,10 +46,10 @@ exports.up = function(knex) {
           trx.raw(`
             INSERT INTO order_status (status)
             VALUES
-            ('Accomplished'),
-            ('Preparing'),
-            ('Delivered'),
-            ('Canceled')        
+            ('Realizado'),
+            ('Em preparo'),
+            ('Entregue'),
+            ('Cancelado')        
           `) 
         ])
         .then(function() {
