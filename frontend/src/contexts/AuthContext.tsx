@@ -18,7 +18,8 @@ interface User {
     id: number,
     name: string,
     email: string,
-    whatsapp: string
+    whatsapp: string,
+    role: string | undefined
 }
 
 interface AuthContextType {
@@ -28,7 +29,7 @@ interface AuthContextType {
         status: number,
         statusText: string
     }>,
-    signOut: () => void,
+    signOut: () => Promise<void>,
     loading: boolean
 }
 
@@ -46,16 +47,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const { 'epcakes.token': token } = parseCookies();
 
         if(token){
-            // Chamada ao backend para verificar dados do usuário a partir do token salvo (+/- 44m video autenticacao JWT Rocketseat)
-            setUser({
-                id: 2,
-                name: "Pedro Lidio",
-                email: "pedroflamen@hotmail.com",
-                whatsapp: "21984703685"
-            })
-        }
+            api.get('sessions').then(response => {
+                const user = response.data.user;
 
-        setLoading(false);
+                setUser({
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    whatsapp: user.whatsapp,
+                    role: user.role
+                })
+
+                setLoading(false);
+            });
+        } else
+            setLoading(false);
     }, []);
 
     const signIn = async ({ email, password }: SignInData) => {
@@ -88,7 +94,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-    const signOut = () => {
+    const signOut = async () => {
+        await api.delete('sessions');
+
         destroyCookie(undefined, 'epcakes.token');
         setUser(null);
         

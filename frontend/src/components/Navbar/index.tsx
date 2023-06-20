@@ -9,7 +9,7 @@ import './styles.css';
 import logoImg from '@/assets/logo.jpg';
 
 export default function Navbar() {
-  const { isAuthenticaded, signOut } = useContext(AuthContext);
+  const { isAuthenticaded, user, signOut } = useContext(AuthContext);
 
   return (
     <nav className="navbar">
@@ -23,15 +23,27 @@ export default function Navbar() {
             <Link href="/" className="link">Inicio</Link>
           </li>
 
-          <li>
-            <Link href="/order-cake" className="link">Encomendar Bolo</Link>
-          </li>
+          {
+            user?.role != "admin" && user?.role != "manager" ? (
+              <li>
+                <Link href="/order-cake" className="link">Encomendar Bolo</Link>
+              </li>
+            ) : null
+          }
 
           {isAuthenticaded ? (
             <>
-              <li>
-                <Link href="/account" className="link">Minha Conta</Link>
-              </li>
+              {
+                user?.role == "admin" || user?.role == "manager" ? (
+                  <li>
+                    <Link href="/management" className="link">Gerenciamento de Pedidos</Link>
+                  </li>
+                ) : (
+                  <li>
+                    <Link href="/account" className="link">Minha Conta</Link>
+                  </li>
+                )
+              }
               <li>
                 <Link href="#" className="link" onClick={signOut}>Sair</Link>
               </li>
