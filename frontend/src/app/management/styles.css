@@ -1,0 +1,40 @@
+.management-container {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+}
+
+.title-container {
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 0px;
+    border-bottom: 1px;
+    border-bottom-color: rgba(80,80,80,0.2);
+    border-style: solid;
+}
+
+.orders-container {
+    display: flex;
+    height: 90vh;
+    width: 100%;
+    padding: 10px;
+    overflow-y: scroll;
+}
+
+.order-container {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    width: 300px;
+    padding: 5px;
+    border-width: 1px;
+    border-color: rgba(80,80,80,0.2);
+    border-style: solid;
+}
